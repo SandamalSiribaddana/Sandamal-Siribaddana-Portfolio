@@ -1,35 +1,46 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Send, CheckCircle2, RefreshCw } from 'lucide-react';
+import { Send, CheckCircle2, RefreshCw, Github, Linkedin, Mail, ExternalLink } from 'lucide-react';
 import { ContactMessage } from '../types';
+
+const SOCIAL_LINKS = [
+  {
+    label: 'GitHub',
+    href: 'https://github.com/dilithasandamal',
+    icon: <Github className="w-4 h-4" />,
+    color: 'hover:bg-stone-900 hover:text-white hover:border-stone-700',
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://linkedin.com/in/dilithasandamal',
+    icon: <Linkedin className="w-4 h-4" />,
+    color: 'hover:bg-blue-700 hover:text-white hover:border-blue-600',
+  },
+  {
+    label: 'Email',
+    href: 'mailto:dilithasandamal@gmail.com',
+    icon: <Mail className="w-4 h-4" />,
+    color: 'hover:bg-amber-700 hover:text-white hover:border-amber-600',
+  },
+];
 
 export default function ContactLetter() {
   const [formData, setFormData] = useState<ContactMessage>({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+    name: '', email: '', subject: '', message: ''
   });
-
   const [isDippingSeal, setIsDippingSeal] = useState<boolean>(false);
   const [isSealed, setIsSealed] = useState<boolean>(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleStampWax = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
-
     setIsDippingSeal(true);
-    
-    // Simulate hot wax pouring/cooling
-    setTimeout(() => {
-      setIsDippingSeal(false);
-      setIsSealed(true);
-    }, 1200);
+    setTimeout(() => { setIsDippingSeal(false); setIsSealed(true); }, 1200);
   };
 
   const handleResetLetter = () => {
@@ -39,23 +50,65 @@ export default function ContactLetter() {
 
   return (
     <div className="flex flex-col h-full justify-between" id="contact-letter-widget">
-      
-      {/* Narrative Section */}
+
+      {/* Header */}
       <div>
-        <span className="text-[10px] font-mono text-stone-500 uppercase tracking-widest font-bold block mb-1">
+        <span className="text-[9px] font-mono text-stone-500 uppercase tracking-widest font-bold block mb-1 bg-stone-800/8 px-2 py-0.5 rounded border border-stone-200/60 w-fit">
           Post & Dispatch Carrier
         </span>
-        <h3 className="font-serif text-3xl font-semibold text-stone-900 tracking-tight leading-none mb-1">
+        <h3 className="font-display text-3xl font-bold text-stone-900 tracking-tight leading-none mb-0.5">
           Write a Letter
         </h3>
-        <p className="italic text-stone-500 font-serif text-sm mb-4">
+        {/* Gold divider */}
+        <div className="flex items-center gap-2 mb-2">
+          <div className="h-[1px] w-6 bg-amber-600/50" />
+          <div className="w-1 h-1 rounded-full bg-amber-500/50" />
+          <div className="h-[1px] flex-1 bg-gradient-to-r from-amber-400/25 to-transparent" />
+        </div>
+        <p className="italic text-stone-500 font-serif text-xs mb-3 leading-relaxed">
           Drop a note into Dilitha's journal sandbox
         </p>
+
+        {/* Social quick-links */}
+        <div className="flex gap-1.5 mb-3">
+          {SOCIAL_LINKS.map(({ label, href, icon, color }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noreferrer"
+              title={label}
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-stone-200 text-stone-500 text-[10px] font-sans font-medium transition-all duration-200 ${color} shadow-xs`}
+            >
+              {icon}
+              <span className="hidden sm:inline">{label}</span>
+              <ExternalLink className="w-2.5 h-2.5 opacity-60" />
+            </a>
+          ))}
+        </div>
       </div>
 
-      {/* Main Letter Content Core */}
-      <div className="flex-1 relative bg-stone-50/50 rounded-xl p-4 sm:p-5 border border-stone-200 shadow-inner flex flex-col justify-center my-2 select-none">
-        
+      {/* Letter body */}
+      <div className="flex-1 relative rounded-xl border border-stone-200/80 shadow-inner flex flex-col justify-center my-1 select-none overflow-hidden"
+        style={{
+          background: 'linear-gradient(180deg, #fefcf3 0%, #faf6e8 100%)',
+          backgroundImage: 'linear-gradient(180deg, #fefcf3 0%, #faf6e8 100%), repeating-linear-gradient(transparent, transparent 23px, rgba(160,130,80,0.10) 23px, rgba(160,130,80,0.10) 24px)',
+          backgroundBlendMode: 'normal',
+        }}
+      >
+        {/* Decorative postmark in top-right corner */}
+        <div className="absolute top-3 right-3 opacity-15 pointer-events-none select-none" style={{ transform: 'rotate(-12deg)' }}>
+          <div className="w-14 h-14 rounded-full border-2 border-stone-700 flex flex-col items-center justify-center">
+            <div className="absolute inset-1 border border-stone-700 rounded-full" />
+            <span className="text-[7px] font-mono font-bold text-stone-800 uppercase tracking-wider">Dilitha</span>
+            <div className="h-[1px] w-8 bg-stone-700 my-0.5" />
+            <span className="text-[6px] font-mono text-stone-800">2026</span>
+          </div>
+        </div>
+
+        {/* Ink drip accent line */}
+        <div className="absolute left-8 top-0 w-[1px] h-full bg-gradient-to-b from-red-300/25 via-red-200/15 to-transparent pointer-events-none" />
+
         <AnimatePresence mode="wait">
           {!isSealed ? (
             <motion.form
@@ -64,17 +117,16 @@ export default function ContactLetter() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onSubmit={handleStampWax}
-              className="space-y-4 font-serif text-sm"
+              className="p-4 sm:p-5 space-y-3.5 font-serif text-sm"
             >
               {/* Salutation */}
-              <div className="text-stone-800 text-base italic">
+              <div className="text-stone-800 text-sm italic font-semibold pl-4">
                 Dear Dilitha Sandamal,
               </div>
 
-              {/* Content Body */}
-              <div className="space-y-3">
-                {/* Introduction statement */}
-                <div className="leading-relaxed text-stone-700">
+              {/* Body */}
+              <div className="space-y-3 pl-4">
+                <div className="leading-relaxed text-stone-700 text-xs">
                   My name is{' '}
                   <input
                     type="text"
@@ -83,73 +135,66 @@ export default function ContactLetter() {
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder="[ Your Noble Name ]"
-                    className="border-b border-stone-300 bg-transparent text-stone-900 focus:border-amber-700 focus:outline-none px-1 font-serif font-semibold w-40 sm:w-48 placeholder-stone-300"
+                    className="border-b border-stone-300 bg-transparent text-stone-900 focus:border-amber-700 focus:outline-none px-1 font-serif font-semibold w-36 sm:w-44 placeholder-stone-300 text-xs"
                   />
-                  , and I am reaching out to discuss{' '}
+                  , reaching out about{' '}
                   <input
                     type="text"
                     name="subject"
                     value={formData.subject}
                     onChange={handleInputChange}
-                    placeholder="[ potential alignment ]"
-                    className="border-b border-stone-300 bg-transparent text-stone-900 focus:border-amber-700 focus:outline-none px-1 font-serif font-semibold w-36 sm:w-40 placeholder-stone-300"
+                    placeholder="[ topic ]"
+                    className="border-b border-stone-300 bg-transparent text-stone-900 focus:border-amber-700 focus:outline-none px-1 font-serif font-semibold w-28 placeholder-stone-300 text-xs"
                   />
                   .
                 </div>
 
-                {/* Email (Return address) layout */}
-                <div className="leading-relaxed text-stone-700">
-                  Please deliver your correspondence back to me at this address:{' '}
+                <div className="leading-relaxed text-stone-700 text-xs">
+                  Reply to:{' '}
                   <input
                     type="email"
                     required
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    placeholder="[ return.address@domain.com ]"
-                    className="border-b border-stone-300 bg-transparent text-stone-900 focus:border-amber-700 focus:outline-none px-1 font-sans text-xs font-medium w-52 sm:w-64 placeholder-stone-300"
+                    placeholder="[ your@email.com ]"
+                    className="border-b border-stone-300 bg-transparent text-stone-900 focus:border-amber-700 focus:outline-none px-1 font-sans text-xs font-medium w-48 placeholder-stone-300"
                   />
                   .
                 </div>
 
-                {/* Main Message block */}
                 <div className="flex flex-col gap-1">
-                  <span className="text-stone-700">Here is the substance of my writing:</span>
+                  <span className="text-stone-600 text-xs">My message:</span>
                   <textarea
                     required
                     name="message"
-                    rows={4}
+                    rows={3}
                     value={formData.message}
                     onChange={handleInputChange}
-                    placeholder="Pour your ink, thoughts, queries, or greeting notes here..."
-                    className="w-full bg-orange-50/10 border-b border-l border-stone-200 rounded p-2 focus:outline-none focus:border-amber-700 font-sans text-xs leading-relaxed text-stone-800 placeholder-stone-400 no-scrollbar"
+                    placeholder="Pour your thoughts, queries, or greetings here..."
+                    className="w-full bg-transparent border-b border-l border-stone-200 rounded-sm p-1.5 focus:outline-none focus:border-amber-600 font-sans text-xs leading-relaxed text-stone-800 placeholder-stone-400 no-scrollbar resize-none"
                   />
                 </div>
               </div>
 
-              {/* Signature block */}
-              <div className="text-right italic mt-2">
-                <p className="text-stone-500 text-xs">Respectfully yours,</p>
-                <p className="text-stone-800 font-semibold">{formData.name || 'Your Name'}</p>
+              {/* Signature */}
+              <div className="text-right italic mt-1 pr-2">
+                <p className="text-stone-400 text-[10px]">Respectfully yours,</p>
+                <p className="text-stone-800 font-display font-semibold text-sm">{formData.name || 'Your Name'}</p>
               </div>
 
-              {/* Dispatch Action */}
-              <div className="pt-2 flex justify-center">
+              {/* Dispatch button */}
+              <div className="flex justify-center pt-1">
                 <button
                   type="submit"
                   disabled={isDippingSeal || !formData.name || !formData.email || !formData.message}
-                  className="relative group bg-red-800 hover:bg-red-900 text-red-50 font-serif font-medium text-xs tracking-wider px-6 py-2.5 rounded-lg border border-red-950 flex items-center gap-2 transition-all cursor-pointer shadow-md active:scale-95 disabled:opacity-40"
+                  className="relative group text-red-50 font-serif font-medium text-xs tracking-wider px-6 py-2.5 rounded-xl border border-red-900 flex items-center gap-2 transition-all cursor-pointer shadow-md active:scale-95 disabled:opacity-40"
+                  style={{ background: 'linear-gradient(135deg, #991b1b, #7f1d1d)' }}
                 >
                   {isDippingSeal ? (
-                    <>
-                      <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                      Pouring Wax Seal...
-                    </>
+                    <><RefreshCw className="w-3.5 h-3.5 animate-spin" /> Pouring Wax Seal...</>
                   ) : (
-                    <>
-                      <Send className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                      Seal & Dispatch Letter
-                    </>
+                    <><Send className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" /> Seal & Dispatch Letter</>
                   )}
                 </button>
               </div>
@@ -159,49 +204,37 @@ export default function ContactLetter() {
               key="letter-sealed"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="flex flex-col items-center justify-center text-center p-4 space-y-6"
+              className="flex flex-col items-center justify-center text-center p-4 space-y-4"
             >
-              {/* Wax Seal Render */}
+              {/* Wax seal */}
               <div className="relative">
-                {/* Simulated Red Wax Seal Stamp with embossed monogram */}
                 <motion.div
-                  initial={{ scale: 2, y: -50, opacity: 0 }}
+                  initial={{ scale: 2, y: -40, opacity: 0 }}
                   animate={{ scale: 1, y: 0, opacity: 1 }}
                   transition={{ type: 'spring', damping: 10, stiffness: 100 }}
-                  className="w-20 h-20 rounded-full bg-[radial-gradient(circle_at_center,#b91c1c_0%,#7f1d1d_100%)] border-2 border-red-950 flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.5)] cursor-default select-none relative"
+                  className="w-20 h-20 rounded-full flex items-center justify-center shadow-[0_6px_20px_rgba(0,0,0,0.4)] cursor-default select-none relative"
+                  style={{ background: 'radial-gradient(circle at 35% 35%, #dc2626 0%, #991b1b 60%, #7f1d1d 100%)' }}
                 >
-                  {/* Embossed Ring */}
-                  <div className="absolute inset-1.5 rounded-full border border-dashed border-red-300/20" />
-                  
-                  {/* Monogram inside seal */}
-                  <span className="font-serif text-3xl font-extrabold text-red-100 opacity-80 drop-shadow-[0_-1px_1px_rgba(0,0,0,1)]">
-                    DS
-                  </span>
-
-                  {/* Gold seal glint */}
-                  <div className="absolute top-2 left-2 w-4 h-4 rounded-full bg-white/20 blur-xs" />
+                  <div className="absolute inset-2 rounded-full border border-dashed border-red-300/25" />
+                  <span className="font-display text-3xl font-extrabold text-red-100/85" style={{ textShadow: '0 -1px 2px rgba(0,0,0,0.9)' }}>DS</span>
+                  <div className="absolute top-2.5 left-2.5 w-4 h-4 rounded-full bg-white/20 blur-sm" />
                 </motion.div>
-                
-                {/* Success Checkmark overlay */}
                 <div className="absolute -bottom-1 -right-1 bg-emerald-600 text-white rounded-full p-1 border-2 border-white shadow-md">
                   <CheckCircle2 className="w-4 h-4" />
                 </div>
               </div>
 
               <div>
-                <h4 className="font-serif text-xl font-bold text-stone-800">
-                  Letter Sealed & Dispatched
-                </h4>
-                <p className="font-sans text-xs text-stone-500 max-w-xs mt-2 leading-relaxed">
-                  Your parchment coordinate lock is set. The letter has been dispatched locally to Dilitha Sandamal’s review log inbox!
+                <h4 className="font-display text-xl font-bold text-stone-800">Letter Sealed & Dispatched</h4>
+                <p className="font-sans text-xs text-stone-500 max-w-xs mt-1.5 leading-relaxed">
+                  Your parchment coordinate lock is set. The letter has been dispatched to Dilitha Sandamal's review log inbox!
                 </p>
               </div>
 
-              <div className="bg-amber-500/5 border border-amber-600/10 rounded-md p-3 text-[11px] font-mono text-stone-600 max-w-xs leading-normal">
-                <span className="font-bold text-amber-800">DISPATCH ENVELOPE METRICS:</span><br />
+              <div className="bg-amber-50/60 border border-amber-200/40 rounded-xl p-3 text-[11px] font-mono text-stone-600 max-w-xs leading-relaxed">
+                <span className="font-bold text-amber-800">DISPATCH METRICS:</span><br />
                 From: {formData.name}<br />
-                Route ID: <span className="underline select-text">msg_post_{Math.floor(Math.random() * 89999 + 10000)}</span>
+                Route ID: <span className="underline select-text">msg_{Math.floor(Math.random() * 89999 + 10000)}</span>
               </div>
 
               <button
@@ -213,12 +246,13 @@ export default function ContactLetter() {
             </motion.div>
           )}
         </AnimatePresence>
-
       </div>
 
-      {/* Ribbon Detail Footer */}
-      <div className="text-[10px] font-mono text-stone-400 text-center pt-2 border-t border-stone-200/50">
-        Dispatched via standard modern browser envelope proxy
+      {/* Footer */}
+      <div className="text-[10px] font-mono text-stone-400 text-center pt-2 border-t border-stone-200/40 flex items-center justify-center gap-2">
+        <div className="h-[1px] w-8 bg-stone-300/40" />
+        <span>Dispatched via modern browser envelope proxy</span>
+        <div className="h-[1px] w-8 bg-stone-300/40" />
       </div>
 
     </div>

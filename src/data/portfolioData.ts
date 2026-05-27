@@ -2,6 +2,7 @@ import { Project, SkillCategory } from '../types';
 import imgAether from '../assets/project_aether.png';
 import imgAether2 from '../assets/project_aether_2.png';
 import imgMeridian from '../assets/project_meridian.png';
+import imgMeridian2 from '../assets/project_meridian.png';
 import imgNeurostream from '../assets/project_neurostream.png';
 import imgVortex from '../assets/project_vortex.png';
 
@@ -50,18 +51,18 @@ export const projectsData: Project[] = [
   },
   {
     id: 'meridian',
-    title: 'Meridian Books',
-    subtitle: 'Decentralized Reading Logs & Review Nest',
-    description: 'A full-stack collaborative platform for book discovery, semantic notes catalogs, and reader analytics, built with multi-device state synchronization.',
-    techStack: ['Node.js', 'Express', 'React', 'MongoDB', 'JWT Auth'],
+    title: 'Hotel Management System App',
+    subtitle: 'React Native Mobile Application',
+    description: 'A mobile-based hotel management application designed to manage hotel rooms, services, bookings, and customer-related operations through a simple and user-friendly interface.',
+    techStack: ['React Native', 'TypeScript', 'JavaScript', 'MongoDB', 'Database'],
     liveUrl: 'https://github.com/dilithasandamal/meridian-books',
     githubUrl: 'https://github.com/dilithasandamal/meridian-books',
     category: 'Full-stack',
-    images: [imgMeridian],
+    images: [imgMeridian, imgMeridian2],
     details: [
-      'Configured secure JWT token exchange and HTTP-only cookie architectures to ensure flawless cross-site authentication workflows.',
-      'Engineered an aggregated reading speed analytics visualizer utilizing custom SVG charts with full scroll-interception.',
-      'Created an offline queue system that retries synchronization when network drops, protecting metadata from silent loss.'
+      'Managed hotel rooms, services, and booking details through a mobile application.',
+      'Built a clean and responsive mobile interface using React Native and TypeScript.',
+      'Implemented database operations to store and retrieve hotel information and bookings'
     ]
   },
   {
