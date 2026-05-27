@@ -8,15 +8,15 @@ interface BookCoverProps {
 
 export default function BookCover({ onOpen }: BookCoverProps) {
   const [isHovered, setIsHovered] = useState(false);
-  
+
   // Mouse coordinates relative to card for dynamic 3D tilt & glint
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  
+
   // Transform mouse values to rotate degrees (-15 to +15)
   const rotateY = useTransform(x, [-150, 150], [12, -12]);
   const rotateX = useTransform(y, [-200, 200], [-10, 10]);
-  
+
   // Map coordinates to glint position%
   const glintX = useTransform(x, [-150, 150], [-20, 120]);
   const glintY = useTransform(y, [-200, 200], [-20, 120]);
@@ -55,11 +55,11 @@ export default function BookCover({ onOpen }: BookCoverProps) {
       >
         {/* Deep leather texture effect with gold stitching border */}
         <div className="absolute inset-0 rounded-r-2xl rounded-l-sm bg-[radial-gradient(circle_at_center,rgba(50,30,20,0.3)_0%,rgba(15,8,5,0.7)_100%)] opacity-95 flex flex-col justify-between p-8 border-l-4 border-stone-950">
-          
+
           {/* Authentic gold foil frame */}
           <div className="absolute inset-4 rounded-r-xl rounded-l-xs border-2 border-amber-600/30 pointer-events-none gold-filigree">
             <div className="absolute inset-1 border border-amber-500/10" />
-            
+
             {/* Corner traditional gold crest ornaments */}
             <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-amber-500/60 rounded-tl-sm" />
             <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-amber-500/60 rounded-tr-sm" />
@@ -75,7 +75,7 @@ export default function BookCover({ onOpen }: BookCoverProps) {
           </div>
 
           {/* Dynamic Glint Reflection mapping */}
-          <motion.div 
+          <motion.div
             style={{
               left: useTransform(glintX, (v) => `${v}%`),
               top: useTransform(glintY, (v) => `${v}%`),
@@ -98,7 +98,7 @@ export default function BookCover({ onOpen }: BookCoverProps) {
               My Journey
             </h1>
             <p className="mt-4 italic font-serif text-amber-600/75 text-sm tracking-wide">
-              An interactive folio of code & craft
+              A digital portfolio showcasing my projects and Skills
             </p>
             <div className="w-16 h-8 border-b border-amber-500/30 rounded-full opacity-60 mt-3" />
           </div>
@@ -125,7 +125,7 @@ export default function BookCover({ onOpen }: BookCoverProps) {
       </motion.div>
 
       {/* Action Guidance Cue */}
-      <motion.p 
+      <motion.p
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}

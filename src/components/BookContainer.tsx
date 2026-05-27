@@ -119,7 +119,7 @@ export default function BookContainer() {
         <div className="flex items-center gap-2">
           <Book className="w-5 h-5 text-amber-500" />
           <span className="font-serif font-semibold text-sm tracking-widest text-stone-400 capitalize">
-            {isOpen ? 'My Journey • Open Folio' : 'Library Shelf'}
+            {isOpen ? 'My Journey • Open Folio' : 'My Shelf'}
           </span>
         </div>
 
@@ -498,7 +498,7 @@ export default function BookContainer() {
 
       {/* FOOTER METADATA (Humane, standard credits) */}
       <footer className="text-center font-mono text-[10px] text-stone-600 relative select-none z-10">
-        <p>© 2026 Dilitha Sandamal. Built with precision, React, and Framer Motion.</p>
+        <p>© 2026 Dilitha Sandamal. Designed with purpose, built with React..</p>
         <p className="mt-1 hidden sm:block">A parchment coordinate register. Open source architecture.</p>
       </footer>
 
