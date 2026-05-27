@@ -1,0 +1,6 @@
+{
+  "name": "Portfolio Book",
+  "description": "An interactive, visually rich book-style portfolio for Dilitha Sandamal with a smooth page flipping animation, tactile reading layout, about me section, and live project highlights.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
