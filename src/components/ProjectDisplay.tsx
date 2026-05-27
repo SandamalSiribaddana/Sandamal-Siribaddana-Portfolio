@@ -16,6 +16,7 @@ import {
 
 interface ProjectDisplayProps {
   project: Project;
+  hideHeaderAndImages?: boolean;
 }
 
 // Map category → glow color class
@@ -33,7 +34,7 @@ const projectNumbers: Record<string, string> = {
   vortex: 'IV',
 };
 
-export default function ProjectDisplay({ project }: ProjectDisplayProps) {
+export default function ProjectDisplay({ project, hideHeaderAndImages }: ProjectDisplayProps) {
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
 
   // NeuroStream AI state
@@ -102,6 +103,7 @@ export default function ProjectDisplay({ project }: ProjectDisplayProps) {
       <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-amber-600/60 via-amber-400/40 to-transparent pointer-events-none" />
 
       {/* ── Narrative header ── */}
+      {!hideHeaderAndImages && (
       <div>
         <div className="flex flex-wrap items-center justify-between gap-1 mb-2 pr-10">
           {/* Glowing category badge */}
@@ -285,12 +287,13 @@ export default function ProjectDisplay({ project }: ProjectDisplayProps) {
           </div>
         )}
       </div>
+      )}
 
       {/* ── Sandboxes + Tech Stack ── */}
       <div className="mt-auto pt-3 border-t border-stone-200/60">
 
         {/* NeuroStream AI Prompter */}
-        {project.id === 'neurostream' && (
+        {!hideHeaderAndImages && project.id === 'neurostream' && (
           <div className="p-3 rounded-xl border border-purple-100 mb-2" style={{ background: 'linear-gradient(135deg, rgba(168,85,247,0.04), rgba(139,92,246,0.02))' }} id="sandbox-neurostream">
             <div className="flex items-center justify-between mb-2">
               <span className="text-[11px] font-mono text-stone-500 flex items-center gap-1">
@@ -327,7 +330,7 @@ export default function ProjectDisplay({ project }: ProjectDisplayProps) {
         )}
 
         {/* Vortex CLI Terminal */}
-        {project.id === 'vortex' && (
+        {!hideHeaderAndImages && project.id === 'vortex' && (
           <div className="p-3 bg-stone-900 rounded-xl border border-stone-800 flex flex-col gap-2 mb-2" id="sandbox-vortex">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-mono text-stone-400 flex items-center gap-1.5">

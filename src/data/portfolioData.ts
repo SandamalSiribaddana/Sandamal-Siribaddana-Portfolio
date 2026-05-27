@@ -7,7 +7,7 @@ import imgNeurostream from '../assets/project_neurostream.png';
 import imgVortex from '../assets/project_vortex.png';
 
 export const aboutMeData = {
-  name: 'Dilitha Sandamal',
+  name: 'Sandamal Siribaddana',
   title: 'Full-Stack Software Engineer & Data Analyst',
   location: 'Gampaha, Sri Lanka',
   bio: 'I am a third-year <strong>Data Science undergraduate</strong> at SLIIT with a strong interest in data analytics, machine learning, AI, and business intelligence. I enjoy turning raw data into meaningful insights and building data-driven solutions that support better decision-making. I am eager to gain industry experience through an internship and continue improving my technical and analytical skills.',

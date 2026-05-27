@@ -40,7 +40,7 @@ export default function ContactLetter() {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
     setIsDippingSeal(true);
-    
+
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -57,7 +57,7 @@ export default function ContactLetter() {
         }),
       });
       const result = await response.json();
-      
+
       if (result.success) {
         setIsDippingSeal(false);
         setIsSealed(true);
@@ -257,7 +257,7 @@ export default function ContactLetter() {
               <div>
                 <h4 className="font-display text-xl font-bold text-stone-800">Letter Sealed & Dispatched</h4>
                 <p className="font-sans text-xs text-stone-500 max-w-xs mt-1.5 leading-relaxed">
-                  Your parchment coordinate lock is set. The letter has been dispatched to Dilitha Sandamal's review log inbox!
+                  Thank you for reaching out! Your letter has been dispatched to Dilitha's inbox.
                 </p>
               </div>
 
@@ -281,7 +281,7 @@ export default function ContactLetter() {
       {/* Footer */}
       <div className="text-[10px] font-mono text-stone-400 text-center pt-2 border-t border-stone-200/40 flex items-center justify-center gap-2">
         <div className="h-[1px] w-8 bg-stone-300/40" />
-        <span>Dispatched via modern browser envelope proxy</span>
+        <span>Dispatched via web3forms</span>
         <div className="h-[1px] w-8 bg-stone-300/40" />
       </div>
 

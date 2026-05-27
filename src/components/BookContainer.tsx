@@ -329,7 +329,7 @@ export default function BookContainer() {
                         {/* Spread 1 LEFT: Project 1 (Aether - Tomato ML) */}
                         {currentSpread === 1 && <ProjectDisplay project={projectsData[0]} />}
                         {/* Spread 2 LEFT: Project 3 (NeuroStream) */}
-                        {currentSpread === 2 && <ProjectDisplay project={projectsData[2]} />}
+                        {currentSpread === 2 && <ProjectDisplay project={projectsData[2]} hideHeaderAndImages={true} />}
                         {/* Spread 3 LEFT: Skill Compass */}
                         {currentSpread === 3 && <SkillCompass />}
                       </motion.div>
@@ -448,7 +448,7 @@ export default function BookContainer() {
                         {/* Spread 1 RIGHT: Project 2 (Hotel Mgmt) */}
                         {currentSpread === 1 && <ProjectDisplay project={projectsData[1]} />}
                         {/* Spread 2 RIGHT: Project 4 (Vortex CLI) */}
-                        {currentSpread === 2 && <ProjectDisplay project={projectsData[3]} />}
+                        {currentSpread === 2 && <ProjectDisplay project={projectsData[3]} hideHeaderAndImages={true} />}
                         {/* Spread 3 RIGHT: Contact Letter */}
                         {currentSpread === 3 && <ContactLetter />}
                       </motion.div>
