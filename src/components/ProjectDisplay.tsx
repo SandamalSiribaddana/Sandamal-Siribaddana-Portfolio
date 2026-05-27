@@ -20,17 +20,17 @@ interface ProjectDisplayProps {
 
 // Map category → glow color class
 const categoryBadgeStyle: Record<string, { bg: string; text: string; border: string; glow: string }> = {
-  'Machine Learning': { bg: 'bg-emerald-50',  text: 'text-emerald-800',  border: 'border-emerald-200', glow: 'badge-ml'   },
-  'Full-stack':       { bg: 'bg-blue-50',      text: 'text-blue-800',     border: 'border-blue-200',    glow: 'badge-full' },
-  'AI & Data':        { bg: 'bg-purple-50',    text: 'text-purple-800',   border: 'border-purple-200',  glow: 'badge-ai'   },
-  'Tools':            { bg: 'bg-amber-50',     text: 'text-amber-800',    border: 'border-amber-200',   glow: 'badge-tools'},
+  'Machine Learning': { bg: 'bg-emerald-50', text: 'text-emerald-800', border: 'border-emerald-200', glow: 'badge-ml' },
+  'React-Native': { bg: 'bg-blue-50', text: 'text-blue-800', border: 'border-blue-200', glow: 'badge-full' },
+  'AI & Data': { bg: 'bg-purple-50', text: 'text-purple-800', border: 'border-purple-200', glow: 'badge-ai' },
+  'Tools': { bg: 'bg-amber-50', text: 'text-amber-800', border: 'border-amber-200', glow: 'badge-tools' },
 };
 
 const projectNumbers: Record<string, string> = {
-  aether:      'I',
-  meridian:    'II',
+  aether: 'I',
+  meridian: 'II',
   neurostream: 'III',
-  vortex:      'IV',
+  vortex: 'IV',
 };
 
 export default function ProjectDisplay({ project }: ProjectDisplayProps) {
@@ -354,8 +354,8 @@ export default function ProjectDisplay({ project }: ProjectDisplayProps) {
               {cliLogs.map((log, i) => (
                 <div key={i} className={
                   log.startsWith('$') ? 'text-amber-400' :
-                  log.startsWith('✔') ? 'text-emerald-400' :
-                  log.startsWith('📦') || log.startsWith('🔍') ? 'text-sky-300' : 'text-stone-400'
+                    log.startsWith('✔') ? 'text-emerald-400' :
+                      log.startsWith('📦') || log.startsWith('🔍') ? 'text-sky-300' : 'text-stone-400'
                 }>{log}</div>
               ))}
               {isPacking && <span className="inline-block w-2 h-3 bg-lime-400 animate-pulse ml-0.5" />}

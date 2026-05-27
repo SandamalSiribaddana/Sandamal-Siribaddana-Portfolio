@@ -100,7 +100,11 @@ export default function SkillCompass() {
                 </h4>
               </div>
               <p className="text-[11px] text-stone-500 italic font-sans leading-relaxed mt-1">
-                Expert consolidation of systems, mechanics, and expressive layers.
+                {activeCategoryIdx === 0
+                  ? 'Building modern, responsive, and interactive user interfaces.'
+                  : activeCategoryIdx === 1
+                  ? 'Engineering scalable server-side systems and clean APIs.'
+                  : 'Turning raw data into insights with AI and analytics tools.'}
               </p>
             </div>
 

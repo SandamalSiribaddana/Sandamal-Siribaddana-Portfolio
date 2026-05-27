@@ -1,8 +1,8 @@
 import { Project, SkillCategory } from '../types';
 import imgAether from '../assets/project_aether.png';
 import imgAether2 from '../assets/project_aether_2.png';
-import imgMeridian from '../assets/project_meridian.png';
-import imgMeridian2 from '../assets/project_meridian.png';
+import imgMeridian from '../assets/hotel1.jpg';
+import imgMeridian2 from '../assets/hotel2.jpg';
 import imgNeurostream from '../assets/project_neurostream.png';
 import imgVortex from '../assets/project_vortex.png';
 
@@ -101,27 +101,29 @@ export const projectsData: Project[] = [
 
 export const skillsData: SkillCategory[] = [
   {
-    name: 'Frontend Artistry',
+    name: 'Frontend',
     skills: [
-      { name: 'React / Vite', proficiency: 95, description: 'Single-page structures, advanced hook cycles, context patterns, lazy bundle tuning.' },
-      { name: 'TypeScript', proficiency: 90, description: 'Type modeling, generics, utility decorators, interface safety contracts.' },
-      { name: 'Tailwind CSS', proficiency: 95, description: 'Bespoke design systems, utility compositions, responsive grids, dark/fluid layers.' },
-      { name: 'Animations & Motion', proficiency: 90, description: 'Micro-interactions, spring layouts, coordinate systems, smooth transitions.' }
+      { name: 'React', proficiency: 85, description: 'Single-page structures, advanced hook cycles, context patterns, lazy bundle tuning.' },
+      { name: 'JavaScript', proficiency: 82, description: 'ES6+ features, async/await, closures, DOM manipulation, and modern JS patterns.' },
+      { name: 'TypeScript', proficiency: 80, description: 'Type modeling, generics, utility decorators, interface safety contracts.' },
+      { name: 'HTML & CSS', proficiency: 90, description: 'Semantic markup, responsive layouts, flexbox/grid, accessibility best practices.' }
     ]
   },
   {
-    name: 'Backend Architecture',
+    name: 'Backend',
     skills: [
-      { name: 'Node.js & Express', proficiency: 88, description: 'RESTful API proxies, custom middleware pipelines, structured logs, cookie gates.' },
-      { name: 'DB Technologies', proficiency: 82, description: 'Relational & Document models, connection pooling, indexed search protocols.' },
-      { name: 'Real-time APIs', proficiency: 85, description: 'Server-Sent Events flow, WebSockets integration, event-driven state syncing.' }
+      { name: 'Java & Spring Boot', proficiency: 92, description: 'Enterprise-grade REST APIs, Spring MVC, dependency injection, and service layers.' },
+      { name: 'Node.js & Express', proficiency: 85, description: 'RESTful API proxies, custom middleware pipelines, structured logs, cookie gates.' },
+      { name: 'REST APIs', proficiency: 84, description: 'API design, endpoint modeling, authentication flows, and versioning strategies.' }
     ]
   },
   {
-    name: 'Agentic Solutions & Systems',
+    name: 'Data & AI',
     skills: [
-      { name: 'Gemini Integrations', proficiency: 85, description: 'Structured prompt layouts, streaming text models, multimodal token parsing.' },
-      { name: 'Developer Tooling', proficiency: 87, description: 'Esbuild compiling, custom Shell environments, Git pipelines, package configs.' }
+      { name: 'MySQL & MongoDB', proficiency: 85, description: 'Relational & document models, connection pooling, indexed search protocols.' },
+      { name: 'Python', proficiency: 79, description: 'Data analysis, scripting, automation, and ML model training workflows.' },
+      { name: 'Power BI', proficiency: 75, description: 'Interactive dashboards, data visualizations, DAX formulas, and report publishing.' },
+      { name: 'Machine Learning', proficiency: 80, description: 'Model training, image classification, TensorFlow, and data-driven predictions.' }
     ]
   }
 ];

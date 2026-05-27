@@ -6,19 +6,19 @@ import { ContactMessage } from '../types';
 const SOCIAL_LINKS = [
   {
     label: 'GitHub',
-    href: 'https://github.com/dilithasandamal',
+    href: 'https://github.com/SandamalSiribaddana',
     icon: <Github className="w-4 h-4" />,
     color: 'hover:bg-stone-900 hover:text-white hover:border-stone-700',
   },
   {
     label: 'LinkedIn',
-    href: 'https://linkedin.com/in/dilithasandamal',
+    href: 'https://www.linkedin.com/in/dilitha-sandamal-2098a3210',
     icon: <Linkedin className="w-4 h-4" />,
     color: 'hover:bg-blue-700 hover:text-white hover:border-blue-600',
   },
   {
     label: 'Email',
-    href: 'mailto:dilithasandamal@gmail.com',
+    href: 'mailto:dilithasandamal13@gmail.com',
     icon: <Mail className="w-4 h-4" />,
     color: 'hover:bg-amber-700 hover:text-white hover:border-amber-600',
   },
@@ -36,11 +36,41 @@ export default function ContactLetter() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleStampWax = (e: React.FormEvent) => {
+  const handleStampWax = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
     setIsDippingSeal(true);
-    setTimeout(() => { setIsDippingSeal(false); setIsSealed(true); }, 1200);
+    
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: 'ef190848-a830-4139-9809-8129de53b6c7',
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject || 'New Contact from Portfolio',
+          message: formData.message,
+        }),
+      });
+      const result = await response.json();
+      
+      if (result.success) {
+        setIsDippingSeal(false);
+        setIsSealed(true);
+      } else {
+        console.error('Submission failed', result);
+        setIsDippingSeal(false);
+        alert('Failed to send message. Please try again later.');
+      }
+    } catch (error) {
+      console.error(error);
+      setIsDippingSeal(false);
+      alert('An error occurred. Please try again later.');
+    }
   };
 
   const handleResetLetter = () => {
@@ -57,7 +87,7 @@ export default function ContactLetter() {
           Post & Dispatch Carrier
         </span>
         <h3 className="font-display text-3xl font-bold text-stone-900 tracking-tight leading-none mb-0.5">
-          Write a Letter
+          Contact Me
         </h3>
         {/* Gold divider */}
         <div className="flex items-center gap-2 mb-2">
@@ -66,7 +96,7 @@ export default function ContactLetter() {
           <div className="h-[1px] flex-1 bg-gradient-to-r from-amber-400/25 to-transparent" />
         </div>
         <p className="italic text-stone-500 font-serif text-xs mb-3 leading-relaxed">
-          Drop a note into Dilitha's journal sandbox
+          Let’s connect for internships, projects, or collaboration opportunities.
         </p>
 
         {/* Social quick-links */}
@@ -134,7 +164,7 @@ export default function ContactLetter() {
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    placeholder="[ Your Noble Name ]"
+                    placeholder="[ Your Name ]"
                     className="border-b border-stone-300 bg-transparent text-stone-900 focus:border-amber-700 focus:outline-none px-1 font-serif font-semibold w-36 sm:w-44 placeholder-stone-300 text-xs"
                   />
                   , reaching out about{' '}
@@ -143,7 +173,7 @@ export default function ContactLetter() {
                     name="subject"
                     value={formData.subject}
                     onChange={handleInputChange}
-                    placeholder="[ topic ]"
+                    placeholder="[ subject ]"
                     className="border-b border-stone-300 bg-transparent text-stone-900 focus:border-amber-700 focus:outline-none px-1 font-serif font-semibold w-28 placeholder-stone-300 text-xs"
                   />
                   .
@@ -157,7 +187,7 @@ export default function ContactLetter() {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    placeholder="[ your@email.com ]"
+                    placeholder="[ Your Email ]"
                     className="border-b border-stone-300 bg-transparent text-stone-900 focus:border-amber-700 focus:outline-none px-1 font-sans text-xs font-medium w-48 placeholder-stone-300"
                   />
                   .
@@ -171,7 +201,7 @@ export default function ContactLetter() {
                     rows={3}
                     value={formData.message}
                     onChange={handleInputChange}
-                    placeholder="Pour your thoughts, queries, or greetings here..."
+                    placeholder="[ Your Message ]"
                     className="w-full bg-transparent border-b border-l border-stone-200 rounded-sm p-1.5 focus:outline-none focus:border-amber-600 font-sans text-xs leading-relaxed text-stone-800 placeholder-stone-400 no-scrollbar resize-none"
                   />
                 </div>
