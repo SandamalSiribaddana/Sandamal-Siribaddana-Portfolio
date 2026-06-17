@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Send, CheckCircle2, RefreshCw, Github, Linkedin, Mail, ExternalLink } from 'lucide-react';
+import { Send, CheckCircle2, RefreshCw, Github, Linkedin, Mail, ExternalLink, FileDown } from 'lucide-react';
 import { ContactMessage } from '../types';
 
 const SOCIAL_LINKS = [
@@ -100,7 +100,7 @@ export default function ContactLetter() {
         </p>
 
         {/* Social quick-links */}
-        <div className="flex gap-1.5 mb-3">
+        <div className="flex flex-wrap gap-1.5 mb-3">
           {SOCIAL_LINKS.map(({ label, href, icon, color }) => (
             <a
               key={label}
@@ -115,6 +115,15 @@ export default function ContactLetter() {
               <ExternalLink className="w-2.5 h-2.5 opacity-60" />
             </a>
           ))}
+          <a
+            href="/Dilitha_Sandamal_CV.pdf"
+            download="Dilitha_Sandamal_CV.pdf"
+            title="Download CV"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-amber-600/30 bg-amber-600/5 text-amber-800 text-[10px] font-sans font-medium transition-all duration-200 hover:bg-amber-700 hover:text-white hover:border-amber-600 shadow-xs cursor-pointer"
+          >
+            <FileDown className="w-3.5 h-3.5" />
+            <span>Download CV</span>
+          </a>
         </div>
       </div>
 

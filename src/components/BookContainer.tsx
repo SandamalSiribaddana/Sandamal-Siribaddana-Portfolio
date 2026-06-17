@@ -19,7 +19,8 @@ import {
   Volume2,
   VolumeX,
   MapPin,
-  Dot
+  Dot,
+  FileDown
 } from 'lucide-react';
 import BookCover from './BookCover';
 import ProjectDisplay from './ProjectDisplay';
@@ -315,13 +316,24 @@ export default function BookContainer() {
                               dangerouslySetInnerHTML={{ __html: aboutMeData.bio }}
                             />
 
-                            {/* Location + year stamp row */}
-                            <div className="flex items-center justify-between text-[11px] font-mono pt-1 text-stone-400">
-                              <span className="flex items-center gap-1">
-                                <MapPin className="w-3 h-3 text-amber-700" />
-                                {aboutMeData.location}
-                              </span>
-                              <span className="italic">Est. CE 2026</span>
+                            {/* CV Download Button & Location */}
+                            <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-stone-300/40">
+                              <a
+                                href="/Dilitha_Sandamal_CV.pdf"
+                                download="Dilitha_Sandamal_CV.pdf"
+                                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-amber-800/35 bg-amber-800/8 text-amber-900 font-serif text-xs font-semibold hover:bg-amber-800/15 hover:border-amber-800/60 hover:text-amber-950 hover:-translate-y-0.5 active:translate-y-0 transition-all shadow-xs cursor-pointer w-fit"
+                              >
+                                <FileDown className="w-4 h-4 text-amber-800" />
+                                <span>Download CV</span>
+                              </a>
+                              
+                              <div className="flex items-center justify-between sm:justify-end gap-4 text-[11px] font-mono text-stone-400">
+                                <span className="flex items-center gap-1">
+                                  <MapPin className="w-3 h-3 text-amber-700" />
+                                  {aboutMeData.location}
+                                </span>
+                                <span className="italic">Est. CE 2026</span>
+                              </div>
                             </div>
                           </div>
                         )}
