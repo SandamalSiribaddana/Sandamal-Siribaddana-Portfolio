@@ -4,6 +4,7 @@ import {
   aboutMeData,
   projectsData
 } from '../data/portfolioData';
+import CertificateGallery from './CertificateGallery';
 import {
   Book,
   ChevronLeft,
@@ -20,10 +21,12 @@ import {
   VolumeX,
   MapPin,
   Dot,
-  FileDown
+  FileDown,
+  Award
 } from 'lucide-react';
 import BookCover from './BookCover';
 import ProjectDisplay from './ProjectDisplay';
+import HumanizerProjectDisplay from './HumanizerProjectDisplay';
 import SkillCompass from './SkillCompass';
 import ContactLetter from './ContactLetter';
 import profilePicture from '../assets/profile_picture.jpg';
@@ -66,7 +69,7 @@ export default function BookContainer() {
   };
 
   const handleNextPage = () => {
-    if (currentSpread < 3) { setDirection('forward'); setCurrentSpread(p => p + 1); triggerFlipEffect(); }
+    if (currentSpread < 4) { setDirection('forward'); setCurrentSpread(p => p + 1); triggerFlipEffect(); }
   };
   const handlePrevPage = () => {
     if (currentSpread > 0) { setDirection('backward'); setCurrentSpread(p => p - 1); triggerFlipEffect(); }
@@ -338,12 +341,14 @@ export default function BookContainer() {
                           </div>
                         )}
 
-                        {/* Spread 1 LEFT: Project 1 (Aether - Tomato ML) */}
+                        {/* Spread 1 LEFT: Project 1 (Tomato ML) */}
                         {currentSpread === 1 && <ProjectDisplay project={projectsData[0]} />}
-                        {/* Spread 2 LEFT: Project 3 (NeuroStream) */}
-                        {currentSpread === 2 && <ProjectDisplay project={projectsData[2]} hideHeaderAndImages={true} />}
+                        {/* Spread 2 LEFT: AI Humanizer */}
+                        {currentSpread === 2 && <HumanizerProjectDisplay slide="left" />}
                         {/* Spread 3 LEFT: Skill Compass */}
                         {currentSpread === 3 && <SkillCompass />}
+                        {/* Spread 4 LEFT: Certificates */}
+                        {currentSpread === 4 && <CertificateGallery />}
                       </motion.div>
                     </AnimatePresence>
                   </div>
@@ -459,10 +464,36 @@ export default function BookContainer() {
 
                         {/* Spread 1 RIGHT: Project 2 (Hotel Mgmt) */}
                         {currentSpread === 1 && <ProjectDisplay project={projectsData[1]} />}
-                        {/* Spread 2 RIGHT: Project 4 (Vortex CLI) */}
-                        {currentSpread === 2 && <ProjectDisplay project={projectsData[3]} hideHeaderAndImages={true} />}
+                        {/* Spread 2 RIGHT: AI Humanizer (cont.) */}
+                        {currentSpread === 2 && <HumanizerProjectDisplay slide="right" />}
                         {/* Spread 3 RIGHT: Contact Letter */}
                         {currentSpread === 3 && <ContactLetter />}
+                        {/* Spread 4 RIGHT: End page */}
+                        {currentSpread === 4 && (
+                          <div className="flex flex-col items-center justify-center h-full gap-4 select-none" id="cert-folio-end">
+                            <div className="flex flex-col items-center gap-3 opacity-60">
+                              <div className="w-16 h-16 rounded-full border-2 border-dashed border-amber-700/40 flex items-center justify-center">
+                                <Award className="w-7 h-7 text-amber-800" />
+                              </div>
+                              <div className="text-center">
+                                <p className="font-display text-lg font-bold text-stone-700">Credentials</p>
+                                <p className="text-[10px] font-mono text-stone-500 mt-1">Earned through dedication &amp; learning</p>
+                              </div>
+                              <div className="flex flex-col gap-2 w-full max-w-[160px]">
+                                {['Coursera', 'Data Science', 'Python', 'Excel'].map((tag, i) => (
+                                  <div key={i} className="flex items-center gap-2 text-[9px] font-mono text-stone-500">
+                                    <span className="w-3 h-3 rounded-full border border-amber-700/40 flex items-center justify-center text-[6px] text-amber-800">{i + 1}</span>
+                                    {tag}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center">
+                              <p className="text-[8px] font-mono text-stone-400 italic">Finis · End of Folio</p>
+                            </div>
+                          </div>
+                        )}
+
                       </motion.div>
                     </AnimatePresence>
                   </div>
@@ -470,7 +501,7 @@ export default function BookContainer() {
                   {/* Right bottom page-turn curl */}
                   <div
                     onClick={handleNextPage}
-                    className={`absolute bottom-0 right-0 w-9 h-9 rounded-tl-lg cursor-pointer transition-all hover:bg-amber-900/8 ${currentSpread === 3 ? 'pointer-events-none opacity-20' : 'opacity-70 hover:opacity-100'}`}
+                    className={`absolute bottom-0 right-0 w-9 h-9 rounded-tl-lg cursor-pointer transition-all hover:bg-amber-900/8 ${currentSpread === 4 ? 'pointer-events-none opacity-20' : 'opacity-70 hover:opacity-100'}`}
                     title="Next page"
                   >
                     <div className="absolute bottom-2 right-2 border-b-2 border-r-2 border-stone-400/60 w-3 h-3" />
@@ -480,12 +511,13 @@ export default function BookContainer() {
                 {/* ═══════════ CHAPTER TAB BOOKMARKS (desktop right rail) ═══════════ */}
                 <div className="absolute right-[-52px] top-6 bottom-6 w-12 flex flex-col gap-2 pointer-events-auto z-10 hidden lg:flex select-none">
                   {[
-                    { label: 'Cover',   index: -1, icon: <Home className="w-3.5 h-3.5" /> },
-                    { label: 'Bio',     index: 0,  icon: <User className="w-3.5 h-3.5" /> },
-                    { label: 'Works I', index: 1,  icon: <Briefcase className="w-3.5 h-3.5" /> },
-                    { label: 'Works II',index: 2,  icon: <Briefcase className="w-3.5 h-3.5" /> },
-                    { label: 'Skills',  index: 3,  icon: <Compass className="w-3.5 h-3.5 animate-slow-spin" /> },
-                    { label: 'Contact', index: 3,  icon: <Mail className="w-3.5 h-3.5" /> },
+                    { label: 'Cover',    index: -1, icon: <Home className="w-3.5 h-3.5" /> },
+                    { label: 'Bio',      index: 0,  icon: <User className="w-3.5 h-3.5" /> },
+                    { label: 'Works I',  index: 1,  icon: <Briefcase className="w-3.5 h-3.5" /> },
+                    { label: 'Works II', index: 2,  icon: <Briefcase className="w-3.5 h-3.5" /> },
+                    { label: 'Skills',   index: 3,  icon: <Compass className="w-3.5 h-3.5 animate-slow-spin" /> },
+                    { label: 'Contact',  index: 3,  icon: <Mail className="w-3.5 h-3.5" /> },
+                    { label: 'Certs',    index: 4,  icon: <Award className="w-3.5 h-3.5" /> },
                   ].map((tab, idx) => {
                     const isActive = tab.index === currentSpread;
                     return (
@@ -534,7 +566,7 @@ export default function BookContainer() {
 
                   {/* Spread dots */}
                   <div className="flex items-center gap-1.5">
-                    {[0, 1, 2, 3].map(v => (
+                    {[0, 1, 2, 3, 4].map(v => (
                       <button
                         key={v}
                         onClick={() => jumpToSpread(v)}
@@ -548,10 +580,10 @@ export default function BookContainer() {
                   </div>
 
                   <button
-                    disabled={currentSpread === 3}
+                    disabled={currentSpread === 4}
                     onClick={handleNextPage}
                     className="p-1 px-4 hover:bg-stone-700 disabled:opacity-20 text-stone-200 text-xs font-serif font-semibold rounded-full flex items-center gap-1 cursor-pointer transition-all shadow border border-stone-700"
-                    style={{ background: currentSpread === 3 ? undefined : 'rgba(40,40,40,0.8)' }}
+                    style={{ background: currentSpread === 4 ? undefined : 'rgba(40,40,40,0.8)' }}
                   >
                     Next
                     <ChevronRight className="w-4 h-4" />
@@ -560,7 +592,7 @@ export default function BookContainer() {
 
                 {/* Mobile jump dots */}
                 <div className="flex gap-1.5 lg:hidden">
-                  {[0, 1, 2, 3].map(v => (
+                  {[0, 1, 2, 3, 4].map(v => (
                     <button
                       key={v}
                       onClick={() => jumpToSpread(v)}

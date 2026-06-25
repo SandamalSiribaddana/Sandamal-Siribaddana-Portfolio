@@ -17,12 +17,14 @@ import {
 interface ProjectDisplayProps {
   project: Project;
   hideHeaderAndImages?: boolean;
+  sandboxOnly?: boolean;
 }
 
 // Map category → glow color class
 const categoryBadgeStyle: Record<string, { bg: string; text: string; border: string; glow: string }> = {
   'Machine Learning': { bg: 'bg-emerald-50', text: 'text-emerald-800', border: 'border-emerald-200', glow: 'badge-ml' },
   'React-Native': { bg: 'bg-blue-50', text: 'text-blue-800', border: 'border-blue-200', glow: 'badge-full' },
+  'Full-stack': { bg: 'bg-blue-50', text: 'text-blue-800', border: 'border-blue-200', glow: 'badge-full' },
   'AI & Data': { bg: 'bg-purple-50', text: 'text-purple-800', border: 'border-purple-200', glow: 'badge-ai' },
   'Tools': { bg: 'bg-amber-50', text: 'text-amber-800', border: 'border-amber-200', glow: 'badge-tools' },
 };
@@ -32,9 +34,10 @@ const projectNumbers: Record<string, string> = {
   meridian: 'II',
   neurostream: 'III',
   vortex: 'IV',
+  humanizer: 'V',
 };
 
-export default function ProjectDisplay({ project, hideHeaderAndImages }: ProjectDisplayProps) {
+export default function ProjectDisplay({ project, hideHeaderAndImages, sandboxOnly }: ProjectDisplayProps) {
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
 
   // NeuroStream AI state
@@ -90,6 +93,123 @@ export default function ProjectDisplay({ project, hideHeaderAndImages }: Project
   const badge = categoryBadgeStyle[project.category] ?? categoryBadgeStyle['Tools'];
   const chapterNum = projectNumbers[project.id] ?? '';
 
+  // SandboxOnly mode: full-height interactive demo panel
+  if (sandboxOnly) {
+    return (
+      <div className="flex flex-col h-full" id={`sandbox-page-${project.id}`}>
+        {/* Header */}
+        <div className="mb-3">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className={`text-[10px] font-mono font-semibold px-2.5 py-0.5 rounded-full border ${badge.bg} ${badge.text} ${badge.border} ${badge.glow} uppercase tracking-wider`}>
+              {project.category}
+            </span>
+            <div className="flex items-center gap-2 ml-auto">
+              {project.githubUrl && (
+                <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-stone-400 hover:text-stone-800 transition-colors" title="GitHub">
+                  <Github className="w-4 h-4" />
+                </a>
+              )}
+              <a href={project.liveUrl} target="_blank" rel="noreferrer" className="text-stone-400 hover:text-amber-800 transition-colors flex items-center gap-1 text-[11px] font-medium font-sans">
+                <span>Live</span><ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </div>
+          <h3 className="font-display text-xl font-bold text-stone-900 tracking-tight leading-snug">{project.title}</h3>
+          <p className="italic text-stone-500 font-serif text-xs mt-0.5">{project.subtitle}</p>
+          <div className="flex items-center gap-2 mt-2">
+            <div className="h-[1px] w-6 bg-amber-600/50" />
+            <div className="w-1 h-1 rounded-full bg-amber-500/50" />
+            <div className="h-[1px] flex-1 bg-gradient-to-r from-amber-500/30 to-transparent" />
+          </div>
+        </div>
+
+        {/* Full-height sandbox */}
+        <div className="flex-1 flex flex-col">
+          {project.id === 'neurostream' && (
+            <div className="flex-1 flex flex-col p-3 rounded-xl border border-purple-200/60 shadow-inner" style={{ background: 'linear-gradient(135deg, rgba(168,85,247,0.06), rgba(139,92,246,0.03))' }} id="sandbox-neurostream-full">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[11px] font-mono text-stone-600 flex items-center gap-1.5 font-semibold">
+                  <Sparkles className="w-3.5 h-3.5 text-purple-500" />
+                  Prompt Scribe Console
+                </span>
+                {isStreaming && (
+                  <span className="text-[8px] font-mono bg-purple-600 text-white rounded px-1.5 py-0.5 animate-pulse flex items-center gap-1">
+                    <RefreshCw className="w-2.5 h-2.5 animate-spin" /> Streaming
+                  </span>
+                )}
+              </div>
+              <div className="flex gap-1.5 mb-3">
+                <input
+                  type="text"
+                  placeholder="Ask e.g. 'Can Dilitha build secure APIs?'"
+                  value={promptInput}
+                  onChange={e => setPromptInput(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && handleAIInquiry()}
+                  className="flex-1 bg-white/90 border border-purple-200/60 text-xs px-2.5 py-2 rounded-lg font-sans focus:outline-none focus:border-purple-400 text-stone-800 placeholder-stone-400 shadow-sm"
+                />
+                <button
+                  onClick={handleAIInquiry}
+                  disabled={isStreaming}
+                  className="bg-purple-700 hover:bg-purple-800 disabled:bg-stone-300 text-white px-3.5 py-2 rounded-lg text-xs flex items-center gap-1 shadow transition-all"
+                >
+                  <Play className="w-3 h-3 fill-current" />
+                </button>
+              </div>
+              <div className="flex-1 bg-white/70 border border-purple-100 overflow-y-auto no-scrollbar rounded-xl p-3 text-[12px] font-serif italic text-stone-700 leading-relaxed shadow-inner" style={{ minHeight: '120px' }}>
+                {aiOutput}
+              </div>
+              <div className="mt-3 flex flex-wrap gap-1">
+                {project.techStack.map(tech => (
+                  <span key={tech} className="text-[9px] font-mono bg-purple-50 border border-purple-200/60 px-2 py-0.5 rounded-full text-purple-700">{tech}</span>
+                ))}
+              </div>
+            </div>
+          )}
+          {project.id === 'vortex' && (
+            <div className="flex-1 flex flex-col p-3 bg-stone-900 rounded-xl border border-stone-800 shadow-xl" id="sandbox-vortex-full">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-mono text-stone-300 flex items-center gap-1.5 font-semibold">
+                  <Terminal className="w-3.5 h-3.5 text-lime-400" />
+                  Vortex Terminal
+                </span>
+                <div className="flex gap-1">
+                  {[
+                    { cmd: 'bundle' as const, label: 'minify', color: 'text-amber-400' },
+                    { cmd: 'analyze' as const, label: 'analyze', color: 'text-lime-400' },
+                  ].map(({ cmd, label, color }) => (
+                    <button key={cmd} onClick={() => handleRunCLI(cmd)} disabled={isPacking}
+                      className={`text-[9px] bg-stone-800 hover:bg-stone-700 ${color} px-2 py-1 rounded border border-stone-700 font-mono disabled:opacity-40 transition-colors`}>
+                      {label}
+                    </button>
+                  ))}
+                  <button onClick={() => handleRunCLI('clean')} disabled={isPacking}
+                    className="text-[9px] bg-stone-800 hover:bg-stone-700 text-stone-400 px-2 py-1 rounded border border-stone-700 font-mono disabled:opacity-40">
+                    <ListRestart className="w-2.5 h-2.5" />
+                  </button>
+                </div>
+              </div>
+              <div className="flex-1 bg-stone-950 font-mono text-[11px] text-lime-400 p-3 rounded-lg border border-stone-900 overflow-y-auto no-scrollbar space-y-1" style={{ minHeight: '120px' }}>
+                {cliLogs.map((log, i) => (
+                  <div key={i} className={
+                    log.startsWith('$') ? 'text-amber-400' :
+                    log.startsWith('✔') ? 'text-emerald-400' :
+                    log.startsWith('📦') || log.startsWith('🔍') ? 'text-sky-300' : 'text-stone-400'
+                  }>{log}</div>
+                ))}
+                {isPacking && <span className="inline-block w-2 h-3 bg-lime-400 animate-pulse ml-0.5" />}
+              </div>
+              <div className="mt-3 flex flex-wrap gap-1">
+                {project.techStack.map(tech => (
+                  <span key={tech} className="text-[9px] font-mono bg-stone-800 border border-stone-700 px-2 py-0.5 rounded-full text-lime-300">{tech}</span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col h-full justify-between" id={`project-${project.id}`}>
 
@@ -102,8 +222,34 @@ export default function ProjectDisplay({ project, hideHeaderAndImages }: Project
       {/* ── Amber accent rule at top ── */}
       <div className="absolute top-0 left-6 right-6 h-[2px] rounded-full bg-gradient-to-r from-amber-600/60 via-amber-400/40 to-transparent pointer-events-none" />
 
-      {/* ── Narrative header ── */}
-      {!hideHeaderAndImages && (
+      {/* ── Narrative header (compact when hideHeaderAndImages) ── */}
+      {hideHeaderAndImages ? (
+        <div className="mb-2" id={`project-compact-${project.id}`}>
+          <div className="flex flex-wrap items-center justify-between gap-1 mb-1.5">
+            <span className={`text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full border ${badge.bg} ${badge.text} ${badge.border} ${badge.glow} uppercase tracking-wider`}>
+              {project.category}
+            </span>
+            <div className="flex items-center gap-2">
+              {project.githubUrl && (
+                <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-stone-400 hover:text-stone-800 transition-colors" title="GitHub">
+                  <Github className="w-3.5 h-3.5" />
+                </a>
+              )}
+              <a href={project.liveUrl} target="_blank" rel="noreferrer" className="text-stone-400 hover:text-amber-800 transition-colors flex items-center gap-1 text-[10px] font-medium">
+                Live <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
+          </div>
+          <h3 className="font-display text-xl sm:text-2xl font-bold text-stone-900 tracking-tight leading-snug">{project.title}</h3>
+          <p className="italic text-stone-500 font-serif text-xs mb-1.5">{project.subtitle}</p>
+          <div className="flex items-center gap-2 mb-2">
+            <div className="h-[1px] w-4 bg-amber-600/50" />
+            <div className="w-1 h-1 rounded-full bg-amber-500/50" />
+            <div className="h-[1px] flex-1 bg-gradient-to-r from-amber-500/30 to-transparent" />
+          </div>
+          <p className="text-stone-700 font-sans text-xs leading-relaxed font-light mb-2">{project.description}</p>
+        </div>
+      ) : (
       <div>
         <div className="flex flex-wrap items-center justify-between gap-1 mb-2 pr-10">
           {/* Glowing category badge */}
@@ -293,7 +439,7 @@ export default function ProjectDisplay({ project, hideHeaderAndImages }: Project
       <div className="mt-auto pt-3 border-t border-stone-200/60">
 
         {/* NeuroStream AI Prompter */}
-        {!hideHeaderAndImages && project.id === 'neurostream' && (
+        {project.id === 'neurostream' && (
           <div className="p-3 rounded-xl border border-purple-100 mb-2" style={{ background: 'linear-gradient(135deg, rgba(168,85,247,0.04), rgba(139,92,246,0.02))' }} id="sandbox-neurostream">
             <div className="flex items-center justify-between mb-2">
               <span className="text-[11px] font-mono text-stone-500 flex items-center gap-1">
@@ -330,7 +476,7 @@ export default function ProjectDisplay({ project, hideHeaderAndImages }: Project
         )}
 
         {/* Vortex CLI Terminal */}
-        {!hideHeaderAndImages && project.id === 'vortex' && (
+        {project.id === 'vortex' && (
           <div className="p-3 bg-stone-900 rounded-xl border border-stone-800 flex flex-col gap-2 mb-2" id="sandbox-vortex">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-mono text-stone-400 flex items-center gap-1.5">

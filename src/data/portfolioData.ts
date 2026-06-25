@@ -5,6 +5,10 @@ import imgMeridian from '../assets/hotel1.jpg';
 import imgMeridian2 from '../assets/hotel2.jpg';
 import imgNeurostream from '../assets/project_neurostream.png';
 import imgVortex from '../assets/project_vortex.png';
+import imgHumanizer1 from '../assets/humanizer1.png';
+import imgHumanizer2 from '../assets/humanizer2.png';
+import imgHumanizer3 from '../assets/humanizer3.png';
+import imgHumanizer4 from '../assets/humanizer4.png';
 
 export const aboutMeData = {
   name: 'Sandamal Siribaddana',
@@ -55,8 +59,8 @@ export const projectsData: Project[] = [
     subtitle: 'React Native Mobile Application',
     description: 'A mobile-based hotel management application designed to manage hotel rooms, services, bookings, and customer-related operations through a simple and user-friendly interface.',
     techStack: ['React Native', 'TypeScript', 'JavaScript', 'MongoDB', 'Database'],
-    liveUrl: 'https://github.com/dilithasandamal/meridian-books',
-    githubUrl: 'https://github.com/dilithasandamal/meridian-books',
+    liveUrl: 'https://github.com/SandamalSiribaddana/Hotel-Management-System',
+    githubUrl: 'https://github.com/SandamalSiribaddana/Hotel-Management-System',
     category: 'Full-stack',
     images: [imgMeridian, imgMeridian2],
     details: [
@@ -95,6 +99,22 @@ export const projectsData: Project[] = [
       'Achieved build times averaging less than 40ms by bypassing heavyweight AST transformation loops when handling plain ES Module files.',
       'Engineered a highly stable file-watcher script that debounces filesystem updates, preventing double-compilation spikes on rapid edits.',
       'Designed a colorful terminal interface summarizing bundle metrics, tree-shaking efficacy, and gzipped visual indicators.'
+    ]
+  },
+  {
+    id: 'humanizer',
+    title: 'AI Humanizer',
+    subtitle: 'AI-Powered Text Refinement Platform',
+    description: 'Transforms AI-generated content into natural, human-like writing using Google Gemini 2.5 Flash. Supports Academic, Business, and Professional writing modes through advanced prompt engineering and linguistic pattern analysis.',
+    techStack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Google Gemini API', 'Framer Motion'],
+    liveUrl: 'https://ai-humanizer-ten.vercel.app/',
+    githubUrl: 'https://github.com/SandamalSiribaddana/AI-Humanizer',
+    category: 'AI & Data',
+    images: [imgHumanizer1, imgHumanizer2, imgHumanizer3, imgHumanizer4],
+    details: [
+      'Built with Next.js 16 & React 19 — leveraging Google Gemini 2.5 Flash via advanced prompt engineering to rewrite AI text into authentic human prose.',
+      'Supports 3 intelligent writing modes: Academic, Business, and Professional — each with tailored linguistic pattern analysis for context-specific output.',
+      'Features real-time word & character analytics, language detection, dark/light mode toggle, and one-click copy-to-clipboard — all with a responsive, production-grade UI.'
     ]
   }
 ];
